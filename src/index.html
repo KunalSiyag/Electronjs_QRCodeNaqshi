@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naqshi Gold QR Manager</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <h2>💎 Naqshi Gold</h2>
+                    <p>& Pearls</p>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-item active" data-tab="generator">
+                    <span class="nav-icon">🏷️</span>
+                    <span class="nav-text">QR Generator</span>
+                </div>
+                <div class="nav-item" data-tab="inventory">
+                    <span class="nav-icon">📦</span>
+                    <span class="nav-text">Inventory</span>
+                </div>
+                <div class="nav-item" data-tab="analytics">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Analytics</span>
+                </div>
+                <div class="nav-item" data-tab="settings">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-text">Settings</span>
+                </div>
+            </nav>
+
+            <div class="sidebar-stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalItems">0</div>
+                    <div class="stat-label">Total Items</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="totalValue">$0</div>
+                    <div class="stat-label">Total Value</div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header">
+                <div class="header-left">
+                    <h1 id="pageTitle">QR Code Generator</h1>
+                    <p id="pageSubtitle">Generate QR codes for your jewelry items</p>
+                </div>
+                <div class="header-right">
+                    <button class="header-btn" id="newItemBtn">
+                        <span>➕</span> New Item
+                    </button>
+                    <button class="header-btn" id="exportBtn">
+                        <span>📤</span> Export
+                    </button>
+                </div>
+            </header>
+
+            <!-- QR Generator Tab -->
+            <div class="tab-content active" id="generator">
+                <div class="content-grid">
+                    <div class="form-card">
+                        <div class="card-header">
+                            <h3>Item Information</h3>
+                            <div class="form-mode-toggle">
+                                <span id="formMode">Add New</span>
+                                <button id="cancelEdit" style="display: none;">Cancel Edit</button>
+                            </div>
+                        </div>
+                        
+                        <form id="itemForm" class="enhanced-form">
+                            <div class="form-section">
+                                <h4>Basic Details</h4>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="storeName">Store Name</label>
+                                        <input type="text" id="storeName" value="Naqshi Gold & Pearls" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="itemId">Item ID</label>
+                                        <input type="text" id="itemId" readonly>
+                                        <small>Auto-generated</small>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="itemType">Item Type</label>
+  <select id="itemType" required>
+    <option value="">Select Type</option>
+    <option>Ring</option><option>Necklace</option><option>Bracelet</option>
+    <option>Earrings</option><option>Chain</option><option>Pendant</option>
+    <option>Bangle</option><option>Anklet</option><option>Nose Pin</option>
+    <option>Toe Ring</option><option>Pearls</option><option>Set</option>
+    <option value="Other">Other (Custom)</option>
+  </select>
+                                    </div>
+                                    <div class="form-group" id="customTypeGroup" style="display: none">
+                                        <label for="customType">Custom Type</label>
+                                        <input type="text" id="customType" placeholder="Enter custom type">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h4>Specifications</h4>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="weight">Weight (grams)</label>
+                                        <input type="number" id="weight" step="0.001" placeholder="10.500" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="purity">Purity</label>
+                                        <select id="purity" required>
+                                            <option value="">Select Purity</option>
+                                            <option value="24K">24K (99.9% Pure)</option>
+                                            <option value="22K">22K (91.6% Pure)</option>
+                                            <option value="21K">21K (87.5% Pure)</option>
+                                            <option value="18K">18K (75.0% Pure)</option>
+                                            <option value="14K">14K (58.3% Pure)</option>
+                                            <option value="10K">10K (41.7% Pure)</option>
+                                            <option value="925 Silver">925 Silver</option>
+                                            <option value="Pearl">Pearl</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="size">Size/Dimensions</label>
+                                        <input type="text" id="size" placeholder="e.g., Ring Size 7, Length 18 inches">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="color">Color/Finish</label>
+                                        <select id="color">
+                                            <option value="">Select Color</option>
+                                            <option value="Yellow Gold">Yellow Gold</option>
+                                            <option value="White Gold">White Gold</option>
+                                            <option value="Rose Gold">Rose Gold</option>
+                                            <option value="Silver">Silver</option>
+                                            <option value="Platinum">Platinum</option>
+                                            <option value="Mixed">Mixed</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h4>Pricing</h4>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="goldRate">Gold Rate (per gram)</label>
+                                        <input type="number" id="goldRate" step="0.01" placeholder="65.00">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="makingCharges">Making Charges</label>
+                                        <input type="number" id="makingCharges" step="0.01" placeholder="250.00">
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="stoneValue">Stone/Pearl Value</label>
+                                        <input type="number" id="stoneValue" step="0.01" placeholder="150.00">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="totalPrice">Total Price</label>
+                                        <input type="number" id="totalPrice" step="0.01" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h4>Certification & Details</h4>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="hallmark">Hallmark/Certificate No.</label>
+                                        <input type="text" id="hallmark" placeholder="BIS123456 or Certificate Number">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="vendor">Vendor/Supplier</label>
+                                        <input type="text" id="vendor" placeholder="Supplier name">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <textarea id="description" rows="3" placeholder="Detailed description of the item, design, special features..."></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">
+                                    <span id="submitBtnText">Generate QR Code</span>
+                                </button>
+                                <button type="button" id="clearForm" class="btn btn-secondary">Clear Form</button>
+                                <button type="button" id="calculatePrice" class="btn btn-outline">Calculate Price</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="qr-card">
+                        <div class="card-header">
+                            <h3>Generated QR Code</h3>
+                            <div class="qr-status" id="qrStatus">Ready to generate</div>
+                        </div>
+                        
+                        <div class="qr-display">
+                            <div id="qrcode" class="qr-container">
+                                <div class="qr-placeholder">
+                                    <span class="qr-icon">📱</span>
+                                    <p>QR code will appear here</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="qrInfo" class="qr-info" style="display: none;"></div>
+
+                        <div class="qr-actions" id="qrActions" style="display: none;">
+                            <button id="saveQR" class="btn btn-success">
+                                <span>💾</span> Save QR Code
+                            </button>
+                            <button id="printQR" class="btn btn-outline">
+                                <span>🖨️</span> Print Label
+                            </button>
+                            <button id="copyQR" class="btn btn-outline">
+                                <span>📋</span> Copy Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inventory Tab -->
+            <div class="tab-content" id="inventory">
+                <div class="inventory-header">
+                    <div class="search-section">
+                        <div class="search-bar">
+                            <input type="text" id="searchInput" placeholder="Search by Item ID, Type, Description...">
+                            <button id="searchBtn">🔍</button>
+                        </div>
+                        <div class="filter-options">
+                            <select id="typeFilter">
+                                <option value="">All Types</option>
+                            </select>
+                            <select id="purityFilter">
+                                <option value="">All Purities</option>
+                            </select>
+                            <button id="clearFilters">Clear Filters</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inventory-grid">
+                    <div id="inventoryList" class="inventory-list"></div>
+                </div>
+
+                <div class="inventory-pagination">
+                    <button id="prevPage">Previous</button>
+                    <span id="pageInfo">Page 1 of 1</span>
+                    <button id="nextPage">Next</button>
+                </div>
+            </div>
+
+            <!-- Analytics Tab -->
+            <div class="tab-content" id="analytics">
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h3>Inventory Summary</h3>
+                        <div id="inventorySummary"></div>
+                    </div>
+                    <div class="analytics-card">
+                        <h3>Value Distribution</h3>
+                        <div id="valueDistribution"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div class="tab-content" id="settings">
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <h3>Store Information</h3>
+                        <div class="form-group">
+                            <label>Store Name</label>
+                            <input type="text" id="settingsStoreName" value="Naqshi Gold & Pearls">
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Number</label>
+                            <input type="text" id="storeContact" placeholder="+1 234 567 8900">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="storeEmail" placeholder="info@naqshigold.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Address</label>
+                            <textarea id="storeAddress" rows="3" placeholder="Store address..."></textarea>
+                        </div>
+                        <button class="btn btn-primary">Save Settings</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+</html>
